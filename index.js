@@ -33,6 +33,7 @@ async function run() {
       const productCollection = database.collection("products");
       const orderCollection = database.collection("orders");
       const userCollection = database.collection("users");
+      const reviewCollection = database.collection("reviews");
 
 
       /*-------------GET API--------------*/
@@ -42,6 +43,12 @@ async function run() {
           res.json(result);
       })
 
+      app.get("/orders", async(req,res)=>{
+        const cursor = orderCollection.find({});
+        const result = await cursor.toArray();
+        res.json(result);
+      })
+
     //   get product by id
 
     app.get("/products/:id", async(req,res) => {
@@ -49,6 +56,8 @@ async function run() {
         const product = await productCollection.findOne(query);
         res.json(product);
     })
+
+
 
     // get order by user email
     app.get("/orders/:email", async(req,res) => {
@@ -93,6 +102,13 @@ async function run() {
         res.json(result);
       })
 
+      app.post("/reviews", async(req,res)=>{
+        const review = req.body;
+        const result = await reviewCollection.insertOne(review);
+        console.log(result);
+        res.json(result);
+      })
+
 
       /*--------end of POST API----------*/
 
@@ -117,6 +133,26 @@ async function run() {
         res.json(result);
       })
       /*----------end of UPDATE API----------*/
+
+
+      /*-----------Delete API----------*/
+      app.delete("/orders/:id", async(req,res)=>{
+        const query = {_id:ObjectId(req.params.id)};
+        const result = await orderCollection.deleteOne(query);
+        res.json(result);
+        console.log(result);
+      })
+
+      //delete product by admin
+
+      app.delete('/products/:id', async(req,res)=>{
+        const query = {_id:ObjectId(req.params.id)};
+        const result = await productCollection.deleteOne(query);
+        res.json(result);
+        console.log(result);
+      })
+
+      /*-----------end of Delete API----------*/
     } finally {
 
     }

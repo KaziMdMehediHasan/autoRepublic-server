@@ -49,6 +49,12 @@ async function run() {
         res.json(result);
       })
 
+
+      app.get("/reviews", async(req,res)=>{
+        const cursor = reviewCollection.find({});
+        const result = await cursor.toArray();
+        res.json
+      })
     //   get product by id
 
     app.get("/products/:id", async(req,res) => {
@@ -56,7 +62,6 @@ async function run() {
         const product = await productCollection.findOne(query);
         res.json(product);
     })
-
 
 
     // get order by user email

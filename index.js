@@ -138,6 +138,7 @@ async function run() {
         res.json(result);
       })
 
+      //order status update route
       app.put("/orders/update", async(req,res)=>{
         const order = req.body;
         console.log('update', order);

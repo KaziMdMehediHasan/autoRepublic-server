@@ -53,7 +53,7 @@ async function run() {
       app.get("/reviews", async(req,res)=>{
         const cursor = reviewCollection.find({});
         const result = await cursor.toArray();
-        res.json
+        res.json(result);
       })
     //   get product by id
 

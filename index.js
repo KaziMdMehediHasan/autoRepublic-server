@@ -137,6 +137,15 @@ async function run() {
         const result = await userCollection.updateOne(filter,updateDoc);
         res.json(result);
       })
+
+      app.put("/orders/update", async(req,res)=>{
+        const order = req.body;
+        console.log('update', order);
+        const filter = {_id:ObjectId(order.id)};
+        const updateDoc = {$set:{status:'shipped'}};
+        const result = await orderCollection.updateOne(filter,updateDoc);
+        res.json(result);
+      })
       /*----------end of UPDATE API----------*/
 
 
